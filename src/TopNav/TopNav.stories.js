@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { storiesOf } from '@storybook/react';
-import TopNav from './TopNav'
+import TopNav from './TopNav.tsx'
 
 const tabs = [
     {
@@ -34,12 +34,12 @@ const menuItems = [
     {
         value: 'notifications',
         label: 'NOTIFICATIONS',
-        meta: 12
+        count: 12
     },
     {
         value: 'tasks',
         label: 'TASKS',
-        meta: 5
+        count: 5
     },
     {
         value: 'help',

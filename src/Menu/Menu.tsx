@@ -1,38 +1,42 @@
 import React from 'react'
 import styled from 'styled-components'
+import { LinkProps } from '../TopNav/TopNav';
+import { white, grey, grey2, listActive, listHover, orange, fontSizeExtraSmall, fontBold, fontSizeRegular } from '../styles/style.constants';
+
 
 const Badge = styled.div`
-    font-size: 10px;
-    border-radius: 8px;
-    color: white;
-    background: #f26620;
+    font-size: ${fontSizeExtraSmall};
+    border-radius: 10px;
+    color: ${white};
+    background: ${orange};
     height: 16px;
     width: 16px;
-    font-weight: 700;
+    font-weight: ${fontBold};
     display: flex;
     justify-content: center;
     align-items: center;
     float: right;
+    padding: 1px;
 `
 
 const ListItem = styled.li`
                     list-style: none;
-                    padding: 12px 20px;
-                    font-size: 14px;
+                    padding: 0.75rem 1.25rem;
+                    font-size: ${fontSizeRegular};
                     font-weight: 400;
-                    color: #4A4A4A;
+                    color: ${grey};
                     cursor: pointer;
                     :hover {
-                        font-weight: 700;
-                        background: #D3D3D3;
+                        font-weight: ${fontBold};
+                        background: ${listHover};
                     };
                     :active {
-                        background: #A9A9A9;
+                        background: ${listActive};
                     }
                           `
 
 const Divider = styled.div`
-                    border-bottom: 1px solid #E4E4E4;
+                    border-bottom: 1px solid ${grey2};
                     margin: 0 20px;
                     border-top: 0;
                 `
@@ -44,23 +48,27 @@ const MenuWrapper = styled.div`
             width : 200px;
             `
 
+interface MenuProps {
+    onSelect: (value: string) => void;
+    menuItems: LinkProps[];
+}
 
-const Menu = ({ onSelect, menuItems }) => {
+const Menu: React.FunctionComponent<MenuProps> = ({ onSelect, menuItems }: MenuProps) => {
 
     return <MenuWrapper>
         <List>
-            {menuItems.map(({ value, label, meta }, index) => {
+            {menuItems.map(({ value, label, count }, index) => {
                 return <>
                     <ListItem
                         key={index}
-                        onClick={(e) => {
+                        onClick={() => {
                             // e.stopPropagation();
                             onSelect(value)
                         }}>
                         {label}
 
-                        {meta !== undefined &&
-                            <Badge> {meta}</Badge>
+                        {count !== undefined &&
+                            <Badge> {count}</Badge>
                         }
 
                     </ListItem>

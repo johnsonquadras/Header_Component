@@ -1,17 +1,18 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, MouseEvent } from 'react'
 import styled from 'styled-components'
 import useDocumentClick from './useDocumentClick';
+import { white, grey2 } from '../styles/style.constants';
 
 const PopoverContent = styled.div`
     width: 200px;
     margin-left: -150px;
-    background-color: #fff;
+    background-color: ${white};
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding-box;
     background-clip: padding-box;
     position: absolute;
     box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
-    border:  solid 1px #e4e4e4;
+    border:  solid 1px ${grey2};
     border-radius: 5px;
     outline: 0;
     ::after {
@@ -24,13 +25,20 @@ const PopoverContent = styled.div`
         margin-left: 1px;
         border-left: 8px solid transparent;
         border-right: 8px solid transparent;
-        border-bottom: 8px solid #fff;
+        border-bottom: 8px solid ${white};
     }
 
 `
 
-const Popover = (props) => {
+
+interface PopoverProps {
+    triggerNode: React.ReactElement;
+    children: any
+}
+
+const Popover: React.FunctionComponent<PopoverProps> = (props: PopoverProps) => {
     const [visible, setVisibility] = useState(false)
+    const { triggerNode, children } = props
 
     const handler = useCallback(
         () => {
@@ -46,21 +54,21 @@ const Popover = (props) => {
         setVisibility(false)
     }
 
-    const onToggle = (e) => {
+    const onToggle = (e: MouseEvent) => {
         e.stopPropagation();
         setVisibility(!visible)
     }
 
     return (
         <div>
-            {props.triggerNode && React.cloneElement(props.triggerNode, {
+            {triggerNode && React.cloneElement(triggerNode, {
                 onClick: onToggle,
             })}
 
 
             {visible &&
                 <PopoverContent>
-                    {props.children}
+                    {children}
                 </PopoverContent>
             }
         </div>

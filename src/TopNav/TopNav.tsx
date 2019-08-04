@@ -3,18 +3,19 @@ import styled from 'styled-components'
 import { ReactComponent as PersonIcon } from './person.svg'
 import Popover from '../Popover'
 import Menu from '../Menu';
+import { headerBackground, grey, grey2, orange, fontFamily, fontBold, fontRegular} from '../styles/style.constants';
 
 const NavWrapper = styled.div`
-    background: #f3f3f3;
+    background:  ${headerBackground};
     box-shadow: 0px 0px 4px rgba(0,0,0,0.25);
     display: flex;
     flex-direction: row;
     height: 75px;
-    font-family: 'Roboto', sans-serif;
+    font-family: ${fontFamily};
 `;
 
 const CompanyLogo = styled.div`
-    color: #4A4A4A;
+    color: ${grey};
     align-items: center;
     display: flex;
     padding-left: 1.5rem
@@ -26,15 +27,19 @@ const HeaderLinks = styled.div`
     flex: 4;
     margin-right: 2rem;
 `
-const Link = styled.a`
-    font-family: Roboto;
+
+interface ILinkProps {
+    active?: boolean;
+  }
+const Link = styled.a<ILinkProps>`
+    font-family: ${fontFamily};
     font-size: 14px;
     line-height: 17px;
     margin-left: 2rem;
     margin-right: 2rem;
     cursor: pointer;
-    font-weight: ${props => (props.active ? '700' : '400')};
-    color: ${props => (props.active ? '#f26620' : '#4A4A4A')};
+    font-weight: ${props => (props.active ? fontBold : fontRegular)};
+    color: ${props => (props.active ? orange : grey)};
     :hover: {
         color: #f8b28f;
     },
@@ -44,10 +49,27 @@ const AccountSettings = styled.div`
     justify-content: center;
     display: flex;
     align-items: center;
-    border-left: 1px solid #E4E4E4;
+    border-left: 1px solid ${grey2};
     cursor: pointer;
 `
-export const TopNav = ({ companyLogo, tabs, menuItems, activeTab, onSelect }) => {
+
+
+export interface LinkProps {
+    value: string;
+    label: string;
+    count: number;
+}
+
+interface TopNavProps {
+    companyLogo: any;
+    tabs: LinkProps[];
+    menuItems: LinkProps[];
+    activeTab: string;
+    onSelect: (value: string) => void
+}
+
+
+export const TopNav: React.FunctionComponent<TopNavProps> = ({ companyLogo, tabs, menuItems, activeTab, onSelect }: TopNavProps) => {
 
     return <NavWrapper >
         <CompanyLogo > {companyLogo} </CompanyLogo>
@@ -61,7 +83,7 @@ export const TopNav = ({ companyLogo, tabs, menuItems, activeTab, onSelect }) =>
 
         <AccountSettings >
             <Popover triggerNode={<PersonIcon />}>
-                <Menu menuItems={menuItems} onSelect={onSelect}/>
+                <Menu menuItems={menuItems} onSelect={onSelect} />
             </Popover>
         </AccountSettings>
 

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
-const useDocumentClick = (handler) => {
+
+const useDocumentClick = (handler: () => void) => {
     useEffect(() => {
 
         // Add event listener
